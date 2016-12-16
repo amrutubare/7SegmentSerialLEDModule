@@ -20,7 +20,7 @@
 #include "distortos/StaticThread.hpp"
 #include "distortos/ThisThread.hpp"
 
-#include "SpiLed7SegmentModule.hpp"
+#include "../devices/SpiLed7SegmentModule/SpiLed7SegmentModule.hpp"
 
 namespace
 {
