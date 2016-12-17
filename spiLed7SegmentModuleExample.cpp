@@ -20,6 +20,7 @@
 #include "distortos/StaticThread.hpp"
 #include "distortos/ThisThread.hpp"
 
+#include "../board/NUCLEO-L073RZ_CUSTOM/include/spi.hpp"
 #include "../devices/SpiLed7SegmentModule/SpiLed7SegmentModule.hpp"
 
 namespace
@@ -37,13 +38,13 @@ namespace
  * \param [in] periodMs is a full (on -> off -> on) period of toggling, milliseconds
  */
 
-static void incrementFunction(external_devices::SpiLed7SegmentModule& ledTube, const std::chrono::milliseconds periodMs)
+static void incrementFunction(external_devices::SpiLed7SegmentModule& ledDevice, const std::chrono::milliseconds periodMs)
 {
 	uint16_t value = 0;
 
 	while (1)
 	{
-		ledTube.write(value);
+		ledDevice.write(value);
 		value++;
 		distortos::ThisThread::sleepFor(periodMs);
 	}
@@ -68,34 +69,16 @@ static void incrementFunction(external_devices::SpiLed7SegmentModule& ledTube, c
 
 int main()
 {
-#if defined(CONFIG_CHIP_STM32_SPIV3_SPI1_ENABLE) && defined(CONFIG_BOARD_NUCLEO_L073RZ)
-	//pa5, af0 - clk
-	//pa12, af0 - mosi
-	//pa4 - cs
-
-	distortos::chip::ChipOutputPin cs{distortos::chip::Pin::pa4};
-
-	distortos::chip::configureAlternateFunctionPin(distortos::chip::Pin::pa5,
-			false,
-			distortos::chip::PinOutputSpeed::veryHigh,
-			distortos::chip::PinPull::up,
-			distortos::chip::PinAlternateFunction::af0);
-	distortos::chip::configureAlternateFunctionPin(distortos::chip::Pin::pa12,
-			false,
-			distortos::chip::PinOutputSpeed::veryHigh,
-			distortos::chip::PinPull::up, distortos::chip::PinAlternateFunction::af0);
-
+#if defined(CONFIG_CHIP_STM32_SPIV3_SPI1_ENABLE) && defined(CONFIG_BOARD_NUCLEO_L073RZ_CUSTOM)
 	distortos::devices::SpiMaster spiMaster(distortos::chip::spi1);
-	external_devices::SpiLed7SegmentModule ledDevice(spiMaster, cs);
-#endif // defined(CONFIG_CHIP_STM32_SPIV3_SPI1_ENABLE) && defined(CONFIG_BOARD_NUCLEO_L073RZ)
-
+	external_devices::SpiLed7SegmentModule ledDevice(spiMaster, distortos::board::spi1pins.getCs());
 	// create and immediately start static thread with 1024 bytes of stack, low priority (1), incrementFunction() will
 	// get segment digital display by reference and period by value
 	auto incrementThread = distortos::makeAndStartStaticThread<1024>(1, incrementFunction,
 			std::ref(ledDevice), std::chrono::milliseconds{1000});
 
 	incrementThread.join();
-
+#endif // defined(CONFIG_CHIP_STM32_SPIV3_SPI1_ENABLE) && defined(CONFIG_BOARD_NUCLEO_L073RZ)
 	return 0;
 }
 

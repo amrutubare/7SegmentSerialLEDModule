@@ -1,0 +1,24 @@
+#
+# file: Kconfig-board
+#
+# author: Copyright (C) 2016 Kamil Szczygiel http://www.distortec.com http://www.freddiechopin.info
+#
+# This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
+# distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+
+source "$OUTPUT/Kconfig-boardOptions"
+
+comment "Custom board options"
+
+config BOARD_SPIS_ENABLE
+	bool "Enable spis"
+	depends on BOARD_TOTAL_SPIS != 0
+	default y
+	help
+		Enables board buttons.
+		
+config BOARD_TOTAL_SPIS
+	int
+	default 0
+
