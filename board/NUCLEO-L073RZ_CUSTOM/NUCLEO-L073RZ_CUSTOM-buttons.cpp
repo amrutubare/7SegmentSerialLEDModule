@@ -1,15 +1,21 @@
 /**
  * \file
- * \brief Definition of buttons for NUCLEO-F091RC
+ * \brief Definition of buttons for NUCLEO-L073RZ_CUSTOM
  *
- * \author Copyright (C) 2016 Kamil Szczygiel http://www.distortec.com http://www.freddiechopin.info
+ * \author Copyright (C) 2014-2017 Kamil Szczygiel http://www.distortec.com http://www.freddiechopin.info
+ * \author Copyright (C) 2017 Cezary Gapinski cezary.gapinski@gmail.com
  *
  * \par License
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * \warning
+ * Automatically generated file - do not edit!
+ *
+ * \date 2017-05-07 13:26:13
  */
 
-#include "include/buttons.hpp"
+#include "distortos/board/buttons.hpp"
 
 #ifdef CONFIG_BOARD_BUTTONS_ENABLE
 
@@ -27,7 +33,9 @@ namespace board
 
 const chip::ChipInputPin buttons[totalButtons]
 {
-		chip::ChipInputPin{buttonPins[0], chip::PinPull::none, true},
+#if DISTORTOS_BOARD_B1_BUTTON_ENABLE == 1
+		chip::ChipInputPin{chip::Pin::pc13, chip::PinPull::none, true},
+#endif	// DISTORTOS_BOARD_B1_BUTTON_ENABLE == 1
 };
 
 }	// namespace board

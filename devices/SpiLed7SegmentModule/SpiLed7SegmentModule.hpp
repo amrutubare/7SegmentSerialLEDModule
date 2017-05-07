@@ -2,7 +2,7 @@
  * \file
  * \brief SpiLed7SegmentModule class header
  *
- * \author Copyright (C) 2016 Cezary Gapinski cezary.gapinski@gmail.com
+ * \author Copyright (C) 2016 - 2017 Cezary Gapinski cezary.gapinski@gmail.com
  *
  * \par License
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
@@ -22,6 +22,8 @@
 namespace external_devices
 {
 
+constexpr uint32_t defaultFrequency = 62500; // min frequency in Hz for 256 divider for 16 MHz max APB driver frequency
+
 class SpiLed7SegmentModule
 {
 public:
@@ -37,11 +39,11 @@ public:
 	 * \param [in] slaveSelectPin is a reference to slave select pin of this 7 segment display
 	 * \param [in] mode3 selects whether SPI mode 0 - CPOL == 0, CPHA == 0 - (false) or SPI mode 3 - CPOL == 1,
 	 * CPHA == 1 - (true) will be used, default - SPI mode 0 (false)
-	 * \param [in] maxClockFrequency is the max clock frequency supported by display, Hz, default - 16MHz
+	 * \param [in] clockFrequency is the clock frequency supported by display, Hz
 	 */
 
 	SpiLed7SegmentModule(distortos::devices::SpiMaster& spiMaster, distortos::devices::OutputPin& slaveSelectPin,
-			const bool mode3 = {}, const uint32_t maxClockFrequency = 16000000);
+			const bool mode3 = {}, const uint32_t clockFrequency = defaultFrequency);
 
 	~SpiLed7SegmentModule();
 

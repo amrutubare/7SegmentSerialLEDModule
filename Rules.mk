@@ -39,7 +39,7 @@ GENERATED := $(GENERATED) $(ELF_$(d)) $(ELF_$(d):%.elf=%.map) $(HEX_$(d)) $(BIN_
 CXXFLAGS_$(d) := $(CXXFLAGS_$(d)) $(STANDARD_INCLUDES)
 CXXFLAGS_$(d) := $(CXXFLAGS_$(d)) $(CHIP_INCLUDES)
 CXXFLAGS_$(d) := $(CXXFLAGS_$(d)) -I$(d)devices
-CXXFLAGS_$(d) := $(CXXFLAGS_$(d)) -I$(d)board
+CXXFLAGS_$(d) := $(CXXFLAGS_$(d)) -I$(d)board/NUCLEO-L073RZ_CUSTOM/include
 
 #-----------------------------------------------------------------------------------------------------------------------
 # standard footer

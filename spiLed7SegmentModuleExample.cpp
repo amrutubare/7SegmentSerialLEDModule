@@ -2,7 +2,7 @@
  * \file
  * \brief SpiLed7SegmentModule example application
  *
- * \author Copyright (C) 2016 Cezary Gapinski cezary.gapinski@gmail.com
+ * \author Copyright (C) 2016 - 2017 Cezary Gapinski cezary.gapinski@gmail.com
  *
  * \par License
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
@@ -20,7 +20,7 @@
 #include "distortos/StaticThread.hpp"
 #include "distortos/ThisThread.hpp"
 
-#include "../board/NUCLEO-L073RZ_CUSTOM/include/spi.hpp"
+#include "distortos/board/spi.hpp"
 #include "../devices/SpiLed7SegmentModule/SpiLed7SegmentModule.hpp"
 
 namespace
@@ -34,7 +34,7 @@ namespace
  *
  * Incrementing value for SpiLed7SegmentModule driver with \a periodMs.
  *
- * \param [in] ledTube is a reference to external_devices::Led7SegmentModule object which value will be changed
+ * \param [in] ledDevice is a reference to external_devices::Led7SegmentModule object which value will be changed
  * \param [in] periodMs is a full (on -> off -> on) period of toggling, milliseconds
  */
 
@@ -51,6 +51,7 @@ static void incrementFunction(external_devices::SpiLed7SegmentModule& ledDevice,
 }
 
 } /// namespace
+
 /**
  * \brief Main code block of SpiLed7SegmentModule application
  *
@@ -66,20 +67,17 @@ static void incrementFunction(external_devices::SpiLed7SegmentModule& ledDevice,
  * \return doesn't return
  */
 
-
 int main()
 {
-#if defined(CONFIG_CHIP_STM32_SPIV3_SPI1_ENABLE) && defined(CONFIG_BOARD_NUCLEO_L073RZ_CUSTOM)
+#if defined(CONFIG_CHIP_STM32_SPIV1_SPI1_ENABLE) && defined(CONFIG_BOARD_NUCLEO_L073RZ_CUSTOM)
 	distortos::devices::SpiMaster spiMaster(distortos::chip::spi1);
 	external_devices::SpiLed7SegmentModule ledDevice(spiMaster, distortos::board::spi1pins.getCs());
 	// create and immediately start static thread with 1024 bytes of stack, low priority (1), incrementFunction() will
 	// get segment digital display by reference and period by value
-	auto incrementThread = distortos::makeAndStartStaticThread<1024>(1, incrementFunction,
+	auto incrementThread = distortos::makeAndStartStaticThread<1024>(2, incrementFunction,
 			std::ref(ledDevice), std::chrono::milliseconds{1000});
 
 	incrementThread.join();
 #endif // defined(CONFIG_CHIP_STM32_SPIV3_SPI1_ENABLE) && defined(CONFIG_BOARD_NUCLEO_L073RZ)
 	return 0;
 }
-
-

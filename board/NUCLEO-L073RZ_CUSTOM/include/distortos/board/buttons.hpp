@@ -2,19 +2,37 @@
  * \file
  * \brief Declaration of buttons for NUCLEO-L073RZ_CUSTOM
  *
- * \author Copyright (C) 2016 Cezary Gapinski cezary.gapinski@gmail.com
+ * \author Copyright (C) 2014-2017 Kamil Szczygiel http://www.distortec.com http://www.freddiechopin.info
+ * \author Copyright (C) 2017 Cezary Gapinski cezary.gapinski@gmail.com
  *
  * \par License
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * \warning
+ * Automatically generated file - do not edit!
+ *
+ * \date 2017-05-07 13:26:13
  */
 
 #ifndef SOURCE_BOARD_STM32_STM32L0_NUCLEO_L073RZ_CUSTOM_INCLUDE_DISTORTOS_BOARD_BUTTONS_HPP_
 #define SOURCE_BOARD_STM32_STM32L0_NUCLEO_L073RZ_CUSTOM_INCLUDE_DISTORTOS_BOARD_BUTTONS_HPP_
 
-#include "distortos/chip/STM32-GPIOv2.hpp"
+#include "distortos/distortosConfiguration.h"
 
-#include <array>
+#include <cstddef>
+
+/// indicates whether B1 button is enabled (1) or not (0)
+#ifdef CONFIG_CHIP_STM32_GPIOV2_GPIOC_ENABLE
+#define DISTORTOS_BOARD_B1_BUTTON_ENABLE	1
+#else	// !def CONFIG_CHIP_STM32_GPIOV2_GPIOC_ENABLE
+#define DISTORTOS_BOARD_B1_BUTTON_ENABLE	0
+#endif	// !def CONFIG_CHIP_STM32_GPIOV2_GPIOC_ENABLE
+
+/// total number of buttons on the board
+#define DISTORTOS_BOARD_TOTAL_BUTTONS		( \
+		DISTORTOS_BOARD_B1_BUTTON_ENABLE + \
+		0)
 
 namespace distortos
 {
@@ -34,23 +52,18 @@ namespace board
 {
 
 /// total number of buttons on the board
-constexpr size_t totalButtons {CONFIG_BOARD_TOTAL_BUTTONS};
+constexpr size_t totalButtons {DISTORTOS_BOARD_TOTAL_BUTTONS};
 
 /*---------------------------------------------------------------------------------------------------------------------+
 | button indexes
 +---------------------------------------------------------------------------------------------------------------------*/
 
-/// index of B1 button
-constexpr size_t b1ButtonIndex {0};
-
-/*---------------------------------------------------------------------------------------------------------------------+
-| indexed access to pin identifiers
-+---------------------------------------------------------------------------------------------------------------------*/
-
-/// array with pin identifiers of all buttons
-constexpr std::array<chip::Pin, totalButtons> buttonPins
+enum
 {
-		chip::Pin::pa5,
+#if DISTORTOS_BOARD_B1_BUTTON_ENABLE == 1
+		/// index of B1 button
+		b1ButtonIndex,
+#endif	// DISTORTOS_BOARD_B1_BUTTON_ENABLE == 1
 };
 
 #ifdef CONFIG_BOARD_BUTTONS_ENABLE

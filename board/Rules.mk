@@ -18,7 +18,7 @@ SUBDIRECTORIES += NUCLEO-L073RZ_CUSTOM
 #-----------------------------------------------------------------------------------------------------------------------
 
 CXXFLAGS_$(d) := $(CXXFLAGS_$(d)) $(STANDARD_INCLUDES)
-CXXFLAGS_$(d) := $(CXXFLAGS_$(d)) -I$(d)NUCLEO-L073RZ_CUSTOM
+CXXFLAGS_$(d) := $(CXXFLAGS_$(d)) -I$(d)NUCLEO-L073RZ_CUSTOM/include
 
 #-----------------------------------------------------------------------------------------------------------------------
 # standard footer

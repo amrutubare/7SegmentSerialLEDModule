@@ -1,20 +1,38 @@
 /**
  * \file
- * \brief Declaration of LEDs for NUCLEO-F091RC
+ * \brief Declaration of LEDs for NUCLEO-L073RZ_CUSTOM
  *
- * \author Copyright (C) 2016 Cezary Gapinski cezary.gapinski@gmail.com
+ * \author Copyright (C) 2014-2017 Kamil Szczygiel http://www.distortec.com http://www.freddiechopin.info
+ * \author Copyright (C) 2017 Cezary Gapinski cezary.gapinski@gmail.com
  *
  * \par License
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * \warning
+ * Automatically generated file - do not edit!
+ *
+ * \date 2017-05-07 13:26:13
  */
 
-#ifndef SOURCE_BOARD_STM32_STM32F0_NUCLEO_L073RZ_CUSTOM_INCLUDE_DISTORTOS_BOARD_LEDS_HPP_
-#define SOURCE_BOARD_STM32_STM32F0_NUCLEO_L073RZ_CUSTOM_INCLUDE_DISTORTOS_BOARD_LEDS_HPP_
+#ifndef SOURCE_BOARD_STM32_STM32L0_NUCLEO_L073RZ_CUSTOM_INCLUDE_DISTORTOS_BOARD_LEDS_HPP_
+#define SOURCE_BOARD_STM32_STM32L0_NUCLEO_L073RZ_CUSTOM_INCLUDE_DISTORTOS_BOARD_LEDS_HPP_
 
-#include "distortos/chip/STM32-GPIOv2.hpp"
+#include "distortos/distortosConfiguration.h"
 
-#include <array>
+#include <cstddef>
+
+/// indicates whether LD2 LED (green) is enabled (1) or not (0)
+#ifdef CONFIG_CHIP_STM32_GPIOV2_GPIOA_ENABLE
+#define DISTORTOS_BOARD_LD2_LED_ENABLE		1
+#else	// !def CONFIG_CHIP_STM32_GPIOV2_GPIOA_ENABLE
+#define DISTORTOS_BOARD_LD2_LED_ENABLE		0
+#endif	// !def CONFIG_CHIP_STM32_GPIOV2_GPIOA_ENABLE
+
+/// total number of leds on the board
+#define DISTORTOS_BOARD_TOTAL_LEDS		( \
+		DISTORTOS_BOARD_LD2_LED_ENABLE + \
+		0)
 
 namespace distortos
 {
@@ -34,34 +52,30 @@ namespace board
 {
 
 /// total number of LEDs on the board
-constexpr size_t totalLeds {CONFIG_BOARD_TOTAL_LEDS};
+constexpr size_t totalLeds {DISTORTOS_BOARD_TOTAL_LEDS};
 
 /*---------------------------------------------------------------------------------------------------------------------+
 | LED indexes
 +---------------------------------------------------------------------------------------------------------------------*/
 
-/// index of LD2 LED (green)
-constexpr size_t ld2LedIndex {0};
+enum
+{
+#if DISTORTOS_BOARD_LD2_LED_ENABLE == 1
+		/// index of LD2 LED (green)
+		ld2LedIndex,
+#endif	// DISTORTOS_BOARD_LD2_LED_ENABLE == 1
+};
+
+#ifdef CONFIG_BOARD_LEDS_ENABLE
 
 /*---------------------------------------------------------------------------------------------------------------------+
 | alternative (color-based) LED indexes
 +---------------------------------------------------------------------------------------------------------------------*/
 
+#if DISTORTOS_BOARD_LD2_LED_ENABLE == 1
 /// alternative index of LD2 LED (green)
 constexpr size_t greenLedIndex {ld2LedIndex};
-
-/*---------------------------------------------------------------------------------------------------------------------+
-| indexed access to pin identifiers
-+---------------------------------------------------------------------------------------------------------------------*/
-
-/// array with pin identifiers of all LEDs
-constexpr std::array<chip::Pin, totalLeds> ledPins
-{
-		//chip::Pin::pa5,
-	chip::Pin::pa1,
-};
-
-#ifdef CONFIG_BOARD_LEDS_ENABLE
+#endif	// DISTORTOS_BOARD_LD2_LED_ENABLE == 1
 
 /*---------------------------------------------------------------------------------------------------------------------+
 | indexed access to LED objects
@@ -76,4 +90,4 @@ extern chip::ChipOutputPin leds[totalLeds];
 
 }	// namespace distortos
 
-#endif	// SOURCE_BOARD_STM32_STM32F0_NUCLEO_L073RZ_CUSTOM_INCLUDE_DISTORTOS_BOARD_LEDS_HPP_
+#endif	// SOURCE_BOARD_STM32_STM32L0_NUCLEO_L073RZ_CUSTOM_INCLUDE_DISTORTOS_BOARD_LEDS_HPP_

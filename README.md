@@ -1,19 +1,12 @@
-Example of Spi 7 Segment Module for [distortos](http://distortos.org/) - an advanced real-time operating system 
+Example of simple counter with 1 second period with usage of Spi 7 Segment Module
+for [distortos](http://distortos.org/) - an advanced real-time operating system 
 for deeply embedded targets.
+
+This example use NUCLEO-L073RZ evaluation board and 4 digits 7 Segment Module based on two connected
+8-bit serial-in, serial or parallel-out shift registers with output latches - 74HC595
 
 Configuration & building
 ------------------------
-
-1. Clone repository:
-`git clone --recursive https://github.com/CezaryGapinski/7SegmentSerialLEDModule`.
-2. Configure distortos - you can either create new configuration (with `make menuconfig`) or use an existing one;
-3. Execute `make configure CONFIG_PATH=<path-to-distortosConfiguration.mk>` to select the configuration you
-created/chose above;
-4. Execute `make` (if you use *GNU Make*) or `tup` (if you use *tup*);
-
-To update *distortos* submodule to latest version use `git submodule update --remote` command.
-
-### Quick example
 
 Following commands may be executed in POSIX-compatible shell (e.g. *Bash*).
 
@@ -28,13 +21,7 @@ Clone the repository:
 
 Either use one of existing configurations:
 
-    $ make configure CONFIG_PATH=SpiLed7SegmentModule
-
-or create a new one from scratch:
-
-    $ make menuconfig
-    ... edit some options, save the configuration as distortosConfiguration.mk ...
-    $ make configure
+    $ make configure CONFIG_PATH=configurations/NUCLEO-L073RZ_CUSTOM
 
 #### 3. Build
 

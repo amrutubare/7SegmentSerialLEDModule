@@ -2,7 +2,7 @@
  * \file
  * \brief SpiLed7SegmentModule class implementation
  *
- * \author Copyright (C) 2016 Cezary Gapinski cezary.gapinski@gmail.com
+ * \author Copyright (C) 2016 - 2017 Cezary Gapinski cezary.gapinski@gmail.com
  *
  * \par License
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
@@ -33,7 +33,7 @@ namespace external_devices
 SpiLed7SegmentModule::SpiLed7SegmentModule(distortos::devices::SpiMaster& spiMaster, distortos::devices::OutputPin& slaveSelectPin,
 		const bool mode3, const uint32_t maxClockFrequency) :
 				spiDevice_{spiMaster, slaveSelectPin, mode3 == false ? distortos::devices::SpiMode::_0 : distortos::devices::SpiMode::_3,
-						maxClockFrequency, 8, false}, decodedDigitsBuffer{},
+						maxClockFrequency, 16, false}, decodedDigitsBuffer{},
 				refhreshDisplayThread{distortos::makeAndStartStaticThread<1024>(1, ledBlinkerFunction, this)},
 				finishThread{}
 {
@@ -104,7 +104,7 @@ bool SpiLed7SegmentModule::isFinishThread()
 void SpiLed7SegmentModule::numberToDigitsDisplay(uint16_t number, SpiDecodedDigitsBuffer& output)
 {
 	std::array<uint8_t, 10> displ_decoded_digits = {
-	    0xC0, //0
+		0xC0, //0
 		0xF9, //1
 		0xA4, //2
 		0xB0, //3
@@ -117,7 +117,7 @@ void SpiLed7SegmentModule::numberToDigitsDisplay(uint16_t number, SpiDecodedDigi
 	};
 
 	std::array<uint8_t, 4> part_chooser = {
-	    0x01, 0x02, 0x04, 0x08,
+		0x01, 0x02, 0x04, 0x08,
 	};
 
 	for(uint8_t i = 0; i < 4; i++)

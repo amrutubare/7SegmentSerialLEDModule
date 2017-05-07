@@ -9,7 +9,7 @@
  * distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "include/spi.hpp"
+#include "distortos/board/spi.hpp"
 
 #ifdef CONFIG_BOARD_SPIS_ENABLE
 

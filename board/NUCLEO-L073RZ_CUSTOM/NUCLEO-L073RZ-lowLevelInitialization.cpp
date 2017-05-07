@@ -25,14 +25,7 @@ namespace board
 
 void lowLevelInitialization()
 {
-	RCC->IOPENR |=
-#if defined(CONFIG_BOARD_LEDS_ENABLE) || defined(CONFIG_BOARD_SPIS_ENABLE)
-			RCC_IOPENR_GPIOAEN |
-#endif	// defined(CONFIG_BOARD_LEDS_ENABLE) || defined(CONFIG_BOARD_SPIS_ENABLE)
-#if defined(CONFIG_BOARD_BUTTONS_ENABLES)
-			RCC_IOPENR_GPIOCEN |
-#endif	// defined(CONFIG_BOARD_BUTTONS_ENABLES)
-			0;
+
 }
 
 }	// namespace board

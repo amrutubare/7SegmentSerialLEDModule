@@ -1,17 +1,23 @@
 /**
  * \file
- * \brief Definition of SPIs for NUCLEO-L073RZ
+ * \brief Definition of LEDs for NUCLEO-L073RZ_CUSTOM
  *
- * \author Copyright (C) 2016 Kamil Szczygiel http://www.distortec.com http://www.freddiechopin.info
+ * \author Copyright (C) 2014-2017 Kamil Szczygiel http://www.distortec.com http://www.freddiechopin.info
+ * \author Copyright (C) 2017 Cezary Gapinski cezary.gapinski@gmail.com
  *
  * \par License
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * \warning
+ * Automatically generated file - do not edit!
+ *
+ * \date 2017-05-07 13:26:13
  */
 
-#include "include/leds.hpp"
+#include "distortos/board/leds.hpp"
 
-#ifdef CONFIG_BOARD_SPIS_ENABLE
+#ifdef CONFIG_BOARD_LEDS_ENABLE
 
 #include "distortos/chip/ChipOutputPin.hpp"
 
@@ -27,11 +33,13 @@ namespace board
 
 chip::ChipOutputPin leds[totalLeds]
 {
-		chip::ChipOutputPin{ledPins[0]},
+#if DISTORTOS_BOARD_LD2_LED_ENABLE == 1
+		chip::ChipOutputPin{chip::Pin::pa5, false, chip::PinOutputSpeed::low, chip::PinPull::none, false, false},
+#endif	// DISTORTOS_BOARD_LD2_LED_ENABLE == 1
 };
 
 }	// namespace board
 
 }	// namespace distortos
 
-#endif	// def CONFIG_BOARD_SPIS_ENABLE
+#endif	// def CONFIG_BOARD_LEDS_ENABLE

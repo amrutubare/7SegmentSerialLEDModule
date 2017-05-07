@@ -43,8 +43,8 @@ private:
 	distortos::chip::ChipOutputPin& _cs;
 };
 
-/// total number of buttons on the board
-constexpr size_t totalSpis {CONFIG_BOARD_TOTAL_SPIS};
+/// total number of spi's on the board
+constexpr size_t totalSpis {1};
 
 /*---------------------------------------------------------------------------------------------------------------------+
 | button indexes
